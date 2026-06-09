@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAREER-FIT 기획안 (투트랙 집중형 MVP)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Pretendard', 'sans-serif'] },
+                    colors: {
+                        primary: '#6366F1',
+                        secondary: '#EC4899',
+                        darkbg: '#0F172A', /* 기획안 배경색 */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #0F172A; color: #f8fafc; }
+        
+        /* 1. 기획안 스크롤바 숨기기 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 2. 어플리케이션 스마트폰 목업 껍데기 강제 고정 (찌그러짐 방지) */
+        #app-container {
+            display: block;
+            width: 380px !important;
+            min-width: 380px !important;
+            height: 750px !important;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 40px;
+            border: 12px solid #9CA3AF; /* 밝은 회색 테두리로 명확히 구분 */
+            box-shadow: 0 0 0 2px #374151, 0 30px 60px -10px rgba(0,0,0,0.8);
+            margin: 0 auto;
+            flex-shrink: 0; /* 절대 쪼그라들지 않음 */
+            color: #000; /* 앱 내부 기본 글자색은 검정 */
+        }
+
+        /* 3. 앱 내부 스타일 (Shorts, Toast 등) */
+        .shorts-container { scroll-snap-type: y mandatory; overflow-y: scroll; height: 100%; }
+        .short-item { scroll-snap-align: start; height: 100%; position: relative; }
+        .video-overlay { background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 30%, transparent 100%); }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast-enter { animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        #splash { transition: opacity 0.5s ease-out; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-primary selection:text-white pb-32">
+
+    <!-- Header Section -->
+    <header class="pt-20 pb-16 px-6 text-center max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-6xl font-black mb-6 leading-tight tracking-tight">
+            서류를 읽는 시대는 <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">끝났습니다.</span>
+        </h1>
+        <p class="text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            이력서와 자소서를 전면 폐지합니다. <br>오직 <b>'실무 퀘스트'</b>로 실력을 증명하고 <b>'1분 쇼츠'</b>로 매칭되는 차세대 채용 플랫폼 <b>CAREER-FIT</b>.
+        </p>
+    </header>
+
+    <!-- Core Features (2 Track) - Light Theme -->
+    <section class="w-full bg-slate-50 py-24 text-slate-900 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-black text-center mb-16">구직자와 채용자 모두 흥미로운 접근</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Track 1 -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-primary/50 transition duration-300">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center text-primary text-2xl mb-6">
+                        <i class="fa-solid fa-crosshairs"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">마이크로 실무 퀘스트 <span class="text-sm font-normal text-indigo-500 ml-2">(하드스킬 검증)</span></h3>
+                    <p class="text-slate-600 leading-relaxed mb-6">
+                        기업은 자소서 대신 '단기 실무 과제'를 올립니다. 구직자는 익명으로 과제를 수행하고 제출합니다. 
+                    </p>
+                    <ul class="space-y-3 text-slate-700 text-sm font-medium">
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 우수자에게 상금(바운티 Bounty) 지급</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 학벌/스펙 블라인드 실무 검증</li>
+                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> 불합격해도 실무 포트폴리오 획득</li>
+                    </ul>
+                </div>
+                <!-- Track 2 -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-pink-500/50 transition duration-300">
+                    <div class="w-14 h-14 bg-pink-100 rounded-2xl flex items-center justify-center text-secondary text-2xl mb-6">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">1분 쌍방향 쇼츠 매칭 <span class="text-sm font-normal text-pink-500 ml-2">(소프트스킬 검증)</span></h3>
+                    <p class="text-slate-600 leading-relaxed mb-6">
+                        기업은 딱딱한 공고 대신 '사내 문화 1분 브이로그'를 올립니다. 구직자는 틱톡처럼 스와이프하며 지원합니다.
+                    </p>
+                    <ul class="space-y-3 text-slate-700 text-sm font-medium">
+                        <li><i class="fa-solid fa-check text-pink-500 mr-2"></i> 정보 비대칭(사내 분위기) 해소</li>
+                        <li><i class="fa-solid fa-check text-pink-500 mr-2"></i> 지루한 탐색 과정을 콘텐츠 소비로 전환</li>
+                        <li><i class="fa-solid fa-check text-pink-500 mr-2"></i> 직관적인 원클릭 스카웃 제안</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive App Section -->
+    <section class="w-full bg-slate-900 py-20 border-y border-slate-800">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-black text-white mb-4">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">MVP 앱</span> 직접 체험해 보세요.
+            </h2>
+            <p class="text-slate-400 text-lg">가상 스마트폰 화면에서 스와이프하고 클릭해 보세요. (마우스 휠 스크롤 가능)</p>
+        </div>
+
+        <!-- APP CONTAINER (Fixed size to prevent shrinking) -->
+        <div id="app-container">
+            
+            <!-- Splash -->
+            <div id="splash" class="absolute inset-0 bg-slate-900 z-50 flex flex-col items-center justify-center text-white">
+                <div class="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center text-4xl mb-6 animate-pulse">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h1 class="text-3xl font-black tracking-tight">CAREER-FIT</h1>
+            </div>
+
+            <!-- Header -->
+            <header id="app-header" class="absolute top-0 w-full z-20 px-6 py-4 flex justify-between items-center transition-colors duration-300">
+                <h2 id="header-title" class="text-xl font-bold text-white drop-shadow-md">쇼츠 매칭</h2>
+                <button class="w-10 h-10 rounded-full bg-black/20 backdrop-blur-md text-white flex items-center justify-center">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+            </header>
+
+            <!-- View 1: Shorts (Track 2) -->
+            <div id="view-shorts" class="absolute inset-0 bg-black pb-[72px]">
+                <div class="shorts-container no-scrollbar" id="shorts-feed">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <!-- View 2: Quests (Track 1) -->
+            <div id="view-quests" class="absolute inset-0 bg-gray-50 pb-[72px] hidden flex flex-col text-slate-800">
+                <div class="pt-20 px-6 pb-4 bg-white shadow-sm z-10 flex space-x-2 overflow-x-auto no-scrollbar">
+                    <button class="px-4 py-1.5 bg-slate-900 text-white rounded-full text-sm font-semibold whitespace-nowrap">전체</button>
+                    <button class="px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap">디자인</button>
+                    <button class="px-4 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm font-medium whitespace-nowrap">개발</button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar" id="quests-list">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <!-- Quest Modal -->
+            <div id="quest-modal" class="absolute inset-0 z-40 bg-black/60 hidden flex items-end justify-center text-slate-800">
+                <div class="bg-white w-full rounded-t-3xl h-[85%] flex flex-col transform translate-y-full transition-transform duration-300" id="quest-modal-content">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center relative">
+                        <div class="w-12 h-1.5 bg-gray-200 rounded-full absolute top-3 left-1/2 -translate-x-1/2"></div>
+                        <h3 class="text-xl font-bold mt-2">퀘스트 상세 정보</h3>
+                        <button onclick="closeQuestModal()" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 mt-2">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 overflow-y-auto flex-1" id="quest-modal-body">
+                        <!-- JS Injected -->
+                    </div>
+                    <div class="p-6 bg-white border-t border-gray-100">
+                        <button onclick="applyQuest()" class="w-full py-4 bg-primary text-white rounded-xl font-bold text-lg hover:bg-indigo-600 transition">
+                            익명으로 도전하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast -->
+            <div id="toast" class="absolute top-20 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full text-sm font-medium shadow-xl z-50 hidden flex items-center whitespace-nowrap">
+                <i id="toast-icon" class="fa-solid fa-circle-check text-green-400 mr-2"></i>
+                <span id="toast-message">알림</span>
+            </div>
+
+            <!-- Nav -->
+            <nav class="absolute bottom-0 w-full h-[72px] bg-white border-t border-gray-100 flex justify-around items-center px-2 z-30">
+                <button onclick="switchTab('shorts')" id="tab-shorts" class="flex flex-col items-center justify-center w-20 h-full text-primary">
+                    <i class="fa-solid fa-mobile-screen text-2xl mb-1 -translate-y-1 transition-transform"></i>
+                    <span class="text-[10px] font-bold">컬처 쇼츠</span>
+                </button>
+                <button onclick="switchTab('quests')" id="tab-quests" class="flex flex-col items-center justify-center w-20 h-full text-gray-400">
+                    <i class="fa-solid fa-crosshairs text-2xl mb-1 transition-transform"></i>
+                    <span class="text-[10px] font-medium">바운티 퀘스트</span>
+                </button>
+            </nav>
+        </div>
+        <!-- END APP CONTAINER -->
+
+        <!-- App Instructions -->
+        <div class="max-w-2xl mx-auto mt-12 px-6 flex flex-col md:flex-row gap-6 justify-center">
+            <div class="bg-slate-800/50 p-6 rounded-2xl flex-1 border border-slate-700">
+                <div class="text-pink-400 mb-2 font-bold"><i class="fa-solid fa-1"></i> 컬처 쇼츠 탭</div>
+                <p class="text-sm text-slate-300">마우스 휠이나 터치로 영상을 위아래로 스와이프 하세요. 하트 아이콘이나 지원 버튼을 눌러보세요.</p>
+            </div>
+            <div class="bg-slate-800/50 p-6 rounded-2xl flex-1 border border-slate-700">
+                <div class="text-indigo-400 mb-2 font-bold"><i class="fa-solid fa-2"></i> 바운티 퀘스트 탭</div>
+                <p class="text-sm text-slate-300">하단 우측의 퀘스트 탭을 누른 뒤, 카드를 클릭하여 퀘스트 상금(바운티) 상세 정보를 확인해 보세요.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model & Global Strategy - Light Theme -->
+    <section class="w-full bg-slate-50 py-24 text-slate-900 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-black text-center mb-16">확장 전략 및 수익 모델</h2>
+            
+            <div class="space-y-16">
+                <!-- Business Model -->
+                <div>
+                    <h3 class="text-2xl text-primary font-bold mb-8 flex items-center"><i class="fa-solid fa-won-sign mr-3"></i> 데이터 기반 B2B/B2C 비즈니스 모델</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                            <h4 class="text-xl font-bold mb-3">B2B 트렌드 데이터 리포트</h4>
+                            <p class="text-slate-600 leading-relaxed">유저들의 쇼츠 시청 데이터와 퀘스트 수행 결과를 비식별화하여 "MZ세대 인재 트렌드 및 기술 선호도 데이터"를 금융기관 및 투자사에 판매합니다.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                            <h4 class="text-xl font-bold mb-3">B2C 내 연봉 예측 테스트 (바이럴)</h4>
+                            <p class="text-slate-600 leading-relaxed">축적된 데이터를 기반으로 '내 성향과 맞는 합격 기업 및 예측 연봉' 프리미엄 리포트를 제공하며, 이를 '취업 뽀개기' 카페에 공유하여 유저를 모읍니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Global Strategy -->
+                <div>
+                    <h3 class="text-2xl text-secondary font-bold mb-8 flex items-center"><i class="fa-solid fa-earth-americas mr-3"></i> 글로벌 스케일업 전략</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                            <h4 class="text-xl font-bold mb-3">글로벌 무역 대회 (Trade Quest)</h4>
+                            <p class="text-slate-600 leading-relaxed">단순한 과제를 넘어, 다국적 기업이 주관하는 대형 '글로벌 무역 실무 퀘스트(Bounty) 토너먼트'를 개최하여 전 세계 구직자들의 트래픽과 경쟁을 유도합니다.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition">
+                            <h4 class="text-xl font-bold mb-3">K-콘텐츠 & 인플루언서 마케팅</h4>
+                            <p class="text-slate-600 leading-relaxed">쇼츠(Shorts) 피드의 장점을 살려, 현지 유명 크리에이터와 협업한 기업 브랜딩 영상을 피드에 자연스럽게 노출시켜 해외 인재를 K-기업으로 유입시킵니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact Section -->
+    <footer class="w-full bg-slate-900 py-6 border-t border-slate-800 text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <p class="text-slate-300 text-base font-medium tracking-wide">
+                Contact : 고성덕 <span class="text-slate-600 mx-2">|</span> kosd3@naver.com
+            </p>
+            <p class="text-slate-600 mt-2 text-sm font-light">© 2026 CAREER-FIT. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS Logic for the App -->
+    <script>
+        const shortsData = [
+            { id: 1, company: "배달의민족", role: "UI/UX 디자이너", desc: "우리의 점심시간은 이렇게 흘러갑니다 🍕 디자인팀 브이로그!", tags: ["#자율출퇴근", "#디자인팀"], bgImage: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", likes: "1.2k" },
+            { id: 2, company: "토스", role: "프론트엔드 개발자", desc: "1분 만에 보는 토스 프론트엔드 챕터 문화 💻", tags: ["#몰입", "#최고의동료"], bgImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", likes: "856" }
+        ];
+
+        const questsData = [
+            { id: 101, company: "카카오페이", title: "송금 완료 화면 인터랙션 개선 스케치", bounty: "500,000", tags: ["UI/UX", "Figma"], deadline: "D-2", desc: "현재 화면의 밋밋한 인터랙션을 개선해 주세요. 애니메이션 스케치 제출. 채택 시 바운티 지급." },
+            { id: 102, company: "무신사", title: "겨울 아우터 기획전 카피라이팅", bounty: "150,000", tags: ["마케팅", "카피"], deadline: "D-1", desc: "1020 타겟 기획전에 쓰일 메인 카피 3종 제안." }
+        ];
+
+        function renderShorts() {
+            const container = document.getElementById('shorts-feed');
+            container.innerHTML = '';
+            shortsData.forEach(short => {
+                container.innerHTML += `
+                    <div class="short-item">
+                        <img src="${short.bgImage}" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 video-overlay"></div>
+                        <div class="absolute right-4 bottom-28 flex flex-col space-y-6 items-center z-10">
+                            <button class="flex flex-col items-center" onclick="likeShort(this)">
+                                <div class="w-12 h-12 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white mb-1 transition hover:bg-pink-500">
+                                    <i class="fa-solid fa-heart text-xl"></i>
+                                </div>
+                                <span class="text-white text-xs font-semibold">${short.likes}</span>
+                            </button>
+                            <button class="flex flex-col items-center" onclick="showToast('지원서를 전송했습니다.')">
+                                <div class="w-12 h-12 bg-primary/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white mb-1 shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                                    <i class="fa-solid fa-paper-plane text-xl"></i>
+                                </div>
+                                <span class="text-white text-xs font-semibold">지원</span>
+                            </button>
+                        </div>
+                        <div class="absolute left-4 bottom-8 right-20 text-white z-10">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm font-bold text-xs">${short.company.charAt(0)}</div>
+                                <h3 class="font-bold text-lg">${short.company}</h3>
+                            </div>
+                            <h4 class="font-semibold text-pink-300 mb-1">${short.role}</h4>
+                            <p class="text-sm text-gray-200 line-clamp-2 mb-2">${short.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderQuests() {
+            const container = document.getElementById('quests-list');
+            container.innerHTML = '';
+            questsData.forEach(quest => {
+                container.innerHTML += `
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md cursor-pointer" onclick="openQuestModal(${quest.id})">
+                        <div class="flex justify-between mb-3">
+                            <span class="px-2 py-1 bg-indigo-50 text-primary text-[10px] font-bold rounded">${quest.company}</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded"><i class="fa-regular fa-clock mr-1"></i> ${quest.deadline}</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">${quest.title}</h4>
+                        <div class="flex justify-between items-center pt-3 border-t border-gray-50">
+                            <div class="text-sm text-gray-500">바운티 보상</div>
+                            <div class="font-black text-primary text-lg">₩ ${quest.bounty}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function switchTab(tabId) {
+            document.getElementById('view-shorts').classList.add('hidden');
+            document.getElementById('view-quests').classList.add('hidden');
+            document.getElementById('tab-shorts').classList.replace('text-primary', 'text-gray-400');
+            document.getElementById('tab-quests').classList.replace('text-primary', 'text-gray-400');
+            
+            document.getElementById('view-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).classList.replace('text-gray-400', 'text-primary');
+
+            if(tabId === 'shorts') {
+                document.getElementById('header-title').innerText = "쇼츠 매칭";
+                document.getElementById('header-title').classList.replace('text-slate-800', 'text-white');
+            } else {
+                document.getElementById('header-title').innerText = "실무 퀘스트";
+                document.getElementById('header-title').classList.replace('text-white', 'text-slate-800');
+            }
+        }
+
+        function likeShort(btn) {
+            btn.querySelector('i').classList.replace('fa-heart', 'fa-solid');
+            btn.querySelector('i').classList.add('text-pink-500');
+            showToast('관심 기업으로 저장되었습니다.');
+        }
+
+        let currentQuestId = null;
+        function openQuestModal(id) {
+            currentQuestId = id;
+            const quest = questsData.find(q => q.id === id);
+            document.getElementById('quest-modal-body').innerHTML = `
+                <div class="mb-4"><span class="px-3 py-1 bg-indigo-50 text-primary text-xs font-bold rounded-full">${quest.company}</span></div>
+                <h2 class="text-2xl font-black mb-4">${quest.title}</h2>
+                <div class="bg-indigo-50 rounded-xl p-4 mb-6 flex justify-between items-center">
+                    <div class="text-indigo-800 font-bold">바운티 상금</div>
+                    <div class="text-2xl font-black text-primary">₩ ${quest.bounty}</div>
+                </div>
+                <p class="text-gray-600 bg-gray-50 p-4 rounded-xl text-sm border border-gray-100">${quest.desc}</p>
+            `;
+            document.getElementById('quest-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('quest-modal-content').classList.remove('translate-y-full'), 10);
+        }
+
+        function closeQuestModal() {
+            document.getElementById('quest-modal-content').classList.add('translate-y-full');
+            setTimeout(() => document.getElementById('quest-modal').classList.add('hidden'), 300);
+        }
+
+        function applyQuest() {
+            closeQuestModal();
+            setTimeout(() => showToast('퀘스트 도전을 시작합니다! 익명으로 제출됩니다.'), 300);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('hidden'); toast.classList.add('toast-enter');
+            setTimeout(() => { toast.classList.add('hidden'); toast.classList.remove('toast-enter'); }, 2500);
+        }
+
+        window.onload = () => {
+            renderShorts(); renderQuests();
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                if(splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 500); }
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
